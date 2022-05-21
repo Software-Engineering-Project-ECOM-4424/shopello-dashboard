@@ -38,16 +38,23 @@ export default function ProductPage() {
       axios({
         method: 'put',
         url: `http://localhost:8000/api/v1/products/${id}`,
-        data: formik.values
+        data: formik.values,
+        headers: { Authorization: token }
       })
-        .then(result => {
-          console.log(result, '///////')
-
-        })
+        .catch((error) => {
+          if (error.response) {
+            if (error.response.status === 401) {
+              localStorage.removeItem('accessToken');
+              sessionStorage.removeItem('accessToken');
+              localStorage.removeItem('user');
+              sessionStorage.removeItem('user');
+              return navigate('/login', { replace: true })
+            };
+          };
+        });
     },
   });
   const { id } = useParams();
-  console.log(formik.values, 'this is for,ik')
 
   useEffect(() => {
     if (!token) {
@@ -56,24 +63,35 @@ export default function ProductPage() {
     axios({
       method: 'get',
       url: `http://localhost:8000/api/v1/categories`,
+      headers: { Authorization: token }
     })
       .then(result => {
         setCategories(result.data);
-        console.log(result.data)
       });
 
     axios({
       method: 'get',
       url: `http://localhost:8000/api/v1/products/${id}`,
+      headers: { Authorization: token }
     })
       .then(result => {
         setProduct(result.data);
-        console.log(result.data);
         formik.setFieldValue('name', result.data.name, false);
         formik.setFieldValue('description', result.data.description, false);
         formik.setFieldValue('price', result.data.price);
         formik.setFieldValue('category_id', result.data.category_id, false);
       })
+      .catch((error) => {
+        if (error.response) {
+            if (error.response.status === 401) {
+                localStorage.removeItem('accessToken');
+                sessionStorage.removeItem('accessToken');
+                localStorage.removeItem('user');
+                sessionStorage.removeItem('user');
+                return navigate('/login', { replace: true })
+            };
+        };
+    });
   }, []);
 
   const catItems = categories?.map(cate => {
@@ -87,12 +105,22 @@ export default function ProductPage() {
     axios({
       method: 'delete',
       url: `http://localhost:8000/api/v1/products/${id}`,
+      headers: { Authorization: token }
     })
       .then(result => {
-        console.log(result);
         navigate('/dashboard/products', { replace: true });
-
       })
+      .catch((error) => {
+        if (error.response) {
+            if (error.response.status === 401) {
+                localStorage.removeItem('accessToken');
+                sessionStorage.removeItem('accessToken');
+                localStorage.removeItem('user');
+                sessionStorage.removeItem('user');
+                return navigate('/login', { replace: true })
+            };
+        };
+    });
   }
 
   const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } = formik;

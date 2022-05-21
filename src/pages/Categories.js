@@ -26,25 +26,32 @@ export default function NewProduct() {
         axios({
             method: 'get',
             url: `http://localhost:8000/api/v1/categories`,
+            headers: { Authorization: token }
         })
             .then(result => {
                 setCategories(result.data);
+            }).catch((error) => {
+                if (error.response) {
+                    if (error.response.status === 401) {
+                        localStorage.removeItem('accessToken');
+                        sessionStorage.removeItem('accessToken');
+                        localStorage.removeItem('user');
+                        sessionStorage.removeItem('user');
+                        return navigate('/login', { replace: true })
+                    };
+                };
             });
     }, []);
 
     function setCategory(params) {
         const category = params.value.toString();
-        console.log(category, 'this is edit cate')
-        console.log(params.row.category_id, 'this is id')
         if (category.length >= 3) {
             axios({
                 method: 'put',
                 url: `http://localhost:8000/api/v1/categories/${params.row.category_id}`,
-                data: { name: category }
+                data: { name: category },
+                headers: { Authorization: token }
             })
-                .then(result => {
-                    console.log(result.data)
-                });
             return { ...params.row, category };
         }
         return { ...params.row }
@@ -58,13 +65,21 @@ export default function NewProduct() {
                     size="small"
                     style={{ marginLeft: 16, backgroundColor: '#d7121a' }}
                     onClick={() => {
-                        console.log(params.row.category_id, 'delte')
                         axios({
                             method: 'delete',
                             url: `http://localhost:8000/api/v1/categories/${params.row.category_id}`,
+                            headers: { Authorization: token }
                         })
-                            .then(result => {
-                                console.log(result.data)
+                            .catch((error) => {
+                                if (error.response) {
+                                    if (error.response.status === 401) {
+                                        localStorage.removeItem('accessToken');
+                                        sessionStorage.removeItem('accessToken');
+                                        localStorage.removeItem('user');
+                                        sessionStorage.removeItem('user');
+                                        return navigate('/login', { replace: true })
+                                    };
+                                };
                             });
                     }}
                 >
@@ -101,10 +116,19 @@ export default function NewProduct() {
         axios({
             method: 'post',
             url: `http://localhost:8000/api/v1/categories`,
-            data: { name: newCate }
+            data: { name: newCate },
+            headers: { Authorization: token }
         })
-            .then(result => {
-                console.log(result.data)
+            .catch((error) => {
+                if (error.response) {
+                    if (error.response.status === 401) {
+                        localStorage.removeItem('accessToken');
+                        sessionStorage.removeItem('accessToken');
+                        localStorage.removeItem('user');
+                        sessionStorage.removeItem('user');
+                        return navigate('/login', { replace: true })
+                    };
+                };
             });
 
     };

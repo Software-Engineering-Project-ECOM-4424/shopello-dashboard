@@ -27,6 +27,11 @@ const navConfig = [
     icon: getIcon('carbon:collapse-categories'),
   },
   {
+    title: 'Orders',
+    path: '/dashboard/orders',
+    icon: getIcon('icon-park-outline:transaction-order'),
+  },
+  {
     title: 'blog',
     path: '/dashboard/blog',
     icon: getIcon('eva:file-text-fill'),
