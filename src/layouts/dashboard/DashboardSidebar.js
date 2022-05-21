@@ -60,12 +60,12 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
         '& .simplebar-content': { height: 1, display: 'flex', flexDirection: 'column' },
       }}
     >
-      <Box sx={{ px: 2.5, py: 3, display: 'inline-flex' }}>
+      {/* <Box sx={{ px: 2.5, py: 3, display: 'inline-flex' }}>
         <Logo />
-      </Box>
+      </Box> */}
 
       <Box sx={{ mb: 5, mx: 2.5 }}>
-        <Link underline="none" component={RouterLink} to="#">
+        {/* <Link underline="none" component={RouterLink} to="#">
           <AccountStyle>
             <Avatar src={account.photoURL} alt="photoURL" />
             <Box sx={{ ml: 2 }}>
@@ -77,7 +77,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
               </Typography>
             </Box>
           </AccountStyle>
-        </Link>
+        </Link> */}
       </Box>
       
       <NavSection navConfig={navConfig} />

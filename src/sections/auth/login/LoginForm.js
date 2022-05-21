@@ -43,7 +43,7 @@ export default function LoginForm() {
             sessionStorage.setItem('accessToken', result.data.token);
             sessionStorage.setItem('user', JSON.stringify({ name: result.data.name, email: result.data.email }))
           }
-          navigate('/dashboard/app', { replace: true });
+          navigate('/dashboard/products', { replace: true });
           return window.location.reload();
 
         })

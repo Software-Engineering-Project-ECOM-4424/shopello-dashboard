@@ -13,6 +13,7 @@ import ProductPage from './pages/ProductPage';
 import DashboardApp from './pages/DashboardApp';
 import NewProduct from './pages/NewProduct';
 import Categories from './pages/Categories';
+import Orders from './pages/order'
 
 // ----------------------------------------------------------------------
 
@@ -26,16 +27,17 @@ export default function Router() {
         { path: 'user', element: <User /> },
         { path: 'products', element: <Products /> },
         { path: 'products/add-product', element: <NewProduct /> },
-        { path: 'products/:id', element: <ProductPage />},
+        { path: 'products/:id', element: <ProductPage /> },
         { path: 'categories', element: <Categories /> },
         { path: 'blog', element: <Blog /> },
+        { path: 'orders', element: <Orders /> },
       ],
     },
     {
       path: '/',
       element: <LogoOnlyLayout />,
       children: [
-        { path: '/', element: <Navigate to="/dashboard/app" /> },
+        { path: '/', element: <Navigate to="/dashboard/products" /> },
         { path: 'login', element: <Login /> },
         { path: 'register', element: <Register /> },
         { path: '404', element: <NotFound /> },

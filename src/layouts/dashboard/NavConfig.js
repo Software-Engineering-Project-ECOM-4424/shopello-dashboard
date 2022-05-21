@@ -6,14 +6,14 @@ import Iconify from '../../components/Iconify';
 const getIcon = (name) => <Iconify icon={name} width={22} height={22} />;
 
 const navConfig = [
+  // {
+  //   title: 'dashboard',
+  //   path: '/dashboard/app',
+  //   icon: getIcon('eva:pie-chart-2-fill'),
+  // },
   {
-    title: 'dashboard',
-    path: '/dashboard/app',
-    icon: getIcon('eva:pie-chart-2-fill'),
-  },
-  {
-    title: 'user',
-    path: '/dashboard/user',
+    title: 'orders',
+    path: '/dashboard/orders',
     icon: getIcon('eva:people-fill'),
   },
   {
@@ -25,12 +25,12 @@ const navConfig = [
     title: 'Categories',
     path: '/dashboard/categories',
     icon: getIcon('carbon:collapse-categories'),
-  },
+  },/*
   {
     title: 'blog',
     path: '/dashboard/blog',
     icon: getIcon('eva:file-text-fill'),
-  }, /*
+  }, 
   {
     title: 'login',
     path: '/login',
