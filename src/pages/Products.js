@@ -23,10 +23,22 @@ export default function EcommerceShop() {
     axios({
       method: 'get',
       url: `http://localhost:8000/api/v1/products`,
+      headers: { Authorization: token }
     })
       .then(result => {
         setProducts(result.data);
       })
+      .catch((error) => {
+        if (error.response) {
+            if (error.response.status === 401) {
+                localStorage.removeItem('accessToken');
+                sessionStorage.removeItem('accessToken');
+                localStorage.removeItem('user');
+                sessionStorage.removeItem('user');
+                return navigate('/login', { replace: true })
+            };
+        };
+    });
   }, [])
 
 

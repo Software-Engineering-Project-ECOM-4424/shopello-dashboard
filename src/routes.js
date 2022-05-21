@@ -13,9 +13,8 @@ import ProductPage from './pages/ProductPage';
 import DashboardApp from './pages/DashboardApp';
 import NewProduct from './pages/NewProduct';
 import Categories from './pages/Categories';
-import Orders from './pages/order'
+import Orders from './pages/Order'
 
-// ----------------------------------------------------------------------
 
 export default function Router() {
   return useRoutes([
@@ -29,6 +28,7 @@ export default function Router() {
         { path: 'products/add-product', element: <NewProduct /> },
         { path: 'products/:id', element: <ProductPage /> },
         { path: 'categories', element: <Categories /> },
+        { path: 'orders', element: <Orders /> },
         { path: 'blog', element: <Blog /> },
         { path: 'orders', element: <Orders /> },
       ],

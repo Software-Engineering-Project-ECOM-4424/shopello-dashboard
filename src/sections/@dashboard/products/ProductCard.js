@@ -24,7 +24,6 @@ ShopProductCard.propTypes = {
 
 export default function ShopProductCard({ product }) {
   const { id, name, image, price } = product;
-  console.log(image, 'this is image')
 
   return (
     <Card>

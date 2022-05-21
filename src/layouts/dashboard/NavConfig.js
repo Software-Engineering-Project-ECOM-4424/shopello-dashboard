@@ -14,7 +14,7 @@ const navConfig = [
   {
     title: 'orders',
     path: '/dashboard/orders',
-    icon: getIcon('eva:people-fill'),
+    icon: getIcon('icon-park-outline:transaction-order'),
   },
   {
     title: 'product',
@@ -26,6 +26,11 @@ const navConfig = [
     path: '/dashboard/categories',
     icon: getIcon('carbon:collapse-categories'),
   },/*
+  {
+    title: 'Orders',
+    path: '/dashboard/orders',
+    icon: getIcon('icon-park-outline:transaction-order'),
+  },
   {
     title: 'blog',
     path: '/dashboard/blog',
