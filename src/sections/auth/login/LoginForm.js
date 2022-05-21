@@ -1,9 +1,10 @@
 import * as Yup from 'yup';
+import axios from 'axios';
 import { useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useFormik, Form, FormikProvider } from 'formik';
 // material
-import { Link, Stack, Checkbox, TextField, IconButton, InputAdornment, FormControlLabel } from '@mui/material';
+import { Link, Stack, Checkbox, TextField, IconButton, InputAdornment, FormControlLabel, Typography } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // component
 import Iconify from '../../../components/Iconify';
@@ -14,7 +15,7 @@ export default function LoginForm() {
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
-
+  const [invalidLogin, setInvalidLogin] = useState(false)
   const LoginSchema = Yup.object().shape({
     email: Yup.string().email('Email must be a valid email address').required('Email is required'),
     password: Yup.string().required('Password is required'),
@@ -28,7 +29,27 @@ export default function LoginForm() {
     },
     validationSchema: LoginSchema,
     onSubmit: () => {
-      navigate('/dashboard', { replace: true });
+      axios({
+        method: 'post',
+        url: `http://localhost:8000/api/v1/auth/adminlogin`,
+        data: formik.values
+      })
+        .then(result => {
+          setInvalidLogin(false);
+          if (result.data.remember) {
+            localStorage.setItem('accessToken', result.data.token);
+            localStorage.setItem('user', JSON.stringify({ name: result.data.name, email: result.data.email }))
+          } else {
+            sessionStorage.setItem('accessToken', result.data.token);
+            sessionStorage.setItem('user', JSON.stringify({ name: result.data.name, email: result.data.email }))
+          }
+          navigate('/dashboard/app', { replace: true });
+          return window.location.reload();
+
+        })
+        .catch((error) => {
+          return setInvalidLogin(true);
+        });
     },
   });
 
@@ -40,6 +61,9 @@ export default function LoginForm() {
 
   return (
     <FormikProvider value={formik}>
+      {invalidLogin && (
+        <Typography sx={{ color: '#d7121a', pb: 3 }}>Invalid Email or Password</Typography>
+      )}
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
         <Stack spacing={3}>
           <TextField
@@ -83,7 +107,7 @@ export default function LoginForm() {
           </Link>
         </Stack>
 
-        <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
+        <LoadingButton fullWidth size="large" type="submit" variant="contained"  >
           Login
         </LoadingButton>
       </Form>

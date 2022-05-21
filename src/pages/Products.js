@@ -1,24 +1,34 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 // material
-import { Container, Stack, Typography } from '@mui/material';
+import { Container, Typography } from '@mui/material';
 // components
 import Page from '../components/Page';
-import { ProductSort, ProductList, ProductCartWidget, ProductFilterSidebar } from '../sections/@dashboard/products';
-// mock
-import PRODUCTS from '../_mock/products';
+import { ProductList, ProductCartWidget } from '../sections/@dashboard/products';
 
-// ----------------------------------------------------------------------
+// ---------------------------------------------------------------------- fetch products from data pase
 
 export default function EcommerceShop() {
-  const [openFilter, setOpenFilter] = useState(false);
 
-  const handleOpenFilter = () => {
-    setOpenFilter(true);
-  };
+  const [products, setProducts] = useState([]);
+  const navigate = useNavigate();
+  const token = localStorage.getItem('accessToken') || sessionStorage.getItem('accessToken');
 
-  const handleCloseFilter = () => {
-    setOpenFilter(false);
-  };
+  useEffect(() => {
+    if (!token) {
+      navigate('/login')
+    }
+    axios({
+      method: 'get',
+      url: `http://localhost:8000/api/v1/products`,
+    })
+      .then(result => {
+        setProducts(result.data);
+      })
+  }, [])
+
 
   return (
     <Page title="Dashboard: Products">
@@ -26,19 +36,7 @@ export default function EcommerceShop() {
         <Typography variant="h4" sx={{ mb: 5 }}>
           Products
         </Typography>
-
-        <Stack direction="row" flexWrap="wrap-reverse" alignItems="center" justifyContent="flex-end" sx={{ mb: 5 }}>
-          <Stack direction="row" spacing={1} flexShrink={0} sx={{ my: 1 }}>
-            <ProductFilterSidebar
-              isOpenFilter={openFilter}
-              onOpenFilter={handleOpenFilter}
-              onCloseFilter={handleCloseFilter}
-            />
-            <ProductSort />
-          </Stack>
-        </Stack>
-
-        <ProductList products={PRODUCTS} />
+        <ProductList products={products} />
         <ProductCartWidget />
       </Container>
     </Page>

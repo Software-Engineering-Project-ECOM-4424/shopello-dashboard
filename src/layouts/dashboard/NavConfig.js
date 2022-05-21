@@ -22,10 +22,15 @@ const navConfig = [
     icon: getIcon('eva:shopping-bag-fill'),
   },
   {
+    title: 'Categories',
+    path: '/dashboard/categories',
+    icon: getIcon('carbon:collapse-categories'),
+  },
+  {
     title: 'blog',
     path: '/dashboard/blog',
     icon: getIcon('eva:file-text-fill'),
-  },
+  }, /*
   {
     title: 'login',
     path: '/login',
@@ -40,7 +45,7 @@ const navConfig = [
     title: 'Not found',
     path: '/404',
     icon: getIcon('eva:alert-triangle-fill'),
-  },
+  }, */
 ];
 
 export default navConfig;

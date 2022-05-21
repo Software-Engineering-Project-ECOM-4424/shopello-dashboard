@@ -9,7 +9,10 @@ import Login from './pages/Login';
 import NotFound from './pages/Page404';
 import Register from './pages/Register';
 import Products from './pages/Products';
+import ProductPage from './pages/ProductPage';
 import DashboardApp from './pages/DashboardApp';
+import NewProduct from './pages/NewProduct';
+import Categories from './pages/Categories';
 
 // ----------------------------------------------------------------------
 
@@ -22,6 +25,9 @@ export default function Router() {
         { path: 'app', element: <DashboardApp /> },
         { path: 'user', element: <User /> },
         { path: 'products', element: <Products /> },
+        { path: 'products/add-product', element: <NewProduct /> },
+        { path: 'products/:id', element: <ProductPage />},
+        { path: 'categories', element: <Categories /> },
         { path: 'blog', element: <Blog /> },
       ],
     },

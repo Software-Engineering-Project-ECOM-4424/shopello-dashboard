@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import { faker } from '@faker-js/faker';
 // @mui
 import { useTheme } from '@mui/material/styles';
@@ -22,7 +24,13 @@ import {
 
 export default function DashboardApp() {
   const theme = useTheme();
-
+  const navigate = useNavigate();
+  const token = localStorage.getItem('accessToken') || sessionStorage.getItem('accessToken');
+  useEffect(() => {
+    if (!token) {
+      navigate('/login')
+    }
+  }, [])
   return (
     <Page title="Dashboard">
       <Container maxWidth="xl">

@@ -1,7 +1,7 @@
 import { filter } from 'lodash';
 import { sentenceCase } from 'change-case';
-import { useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 // material
 import {
   Card,
@@ -71,6 +71,13 @@ function applySortFilter(array, comparator, query) {
 }
 
 export default function User() {
+  const navigate = useNavigate();
+  const token = localStorage.getItem('accessToken') || sessionStorage.getItem('accessToken');
+  useEffect(() => {
+    if (!token) {
+      navigate('/login')
+    }
+  }, [])
   const [page, setPage] = useState(0);
 
   const [order, setOrder] = useState('asc');

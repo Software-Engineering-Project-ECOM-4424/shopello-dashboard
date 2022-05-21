@@ -1,4 +1,5 @@
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 // material
 import { Grid, Button, Container, Stack, Typography } from '@mui/material';
 // components
@@ -19,6 +20,14 @@ const SORT_OPTIONS = [
 // ----------------------------------------------------------------------
 
 export default function Blog() {
+  const navigate = useNavigate();
+  const token = localStorage.getItem('accessToken') || sessionStorage.getItem('accessToken');
+  useEffect(() => {
+    if (!token) {
+      navigate('/login')
+    }
+  }, [])
+
   return (
     <Page title="Dashboard: Blog">
       <Container>
